@@ -102,6 +102,9 @@
   .icon--tag { --svg: url("tag.svg "); }
   .icon--tag-outline { --svg: url("tag-outline.svg "); }
   .icon--thumb-up { --svg: url("thumb-up.svg "); }
+  .icon--timer-start { --svg: url("timer-start.svg"); }
+  .icon--timer-stop { --svg: url("timer-stop.svg"); }
+  .icon--clock { --svg: url("clock.svg"); }
   .icon--trash { --svg: url("trash.svg "); }
   .icon--unpinned { --svg: url("unpinned.svg"); }
   .icon--unseen { --svg: url("unseen.svg"); }

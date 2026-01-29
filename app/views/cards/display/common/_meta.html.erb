@@ -26,5 +26,12 @@
   <div class="card__meta-avatars card__meta-avatars--assignees">
     <%= yield %>
   </div>
+
+  <% if card.total_time_tracked > 0 || card.has_active_timer_for?(Current.user) %>
+    <%= link_to card_time_entries_path(card), class: "card__meta-text card__meta-text--time-tracked", data: { turbo_frame: "modal" } do %>
+      <%= icon_tag "clock" %>
+      <strong><%= format_duration(card.total_time_tracked) %></strong> tracked
+    <% end %>
+  <% end %>
 </div>
 

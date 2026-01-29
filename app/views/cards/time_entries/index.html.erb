@@ -1,0 +1,18 @@
+<div class="time-entries" id="<%= dom_id(@card, :time_entries) %>">
+  <header class="time-entries__header">
+    <h3 class="time-entries__title">Time Tracked</h3>
+    <span class="time-entries__total" id="<%= dom_id(@card, :time_entries_total) %>">
+      <strong><%= format_duration(@card.total_time_tracked) %></strong>
+    </span>
+  </header>
+
+  <div class="time-entries__list" id="<%= dom_id(@card, :time_entries_list) %>">
+    <% if @time_entries.any? %>
+      <%= render partial: "cards/time_entries/time_entry", collection: @time_entries %>
+    <% else %>
+      <p class="time-entries__empty">No time logged yet</p>
+    <% end %>
+  </div>
+
+  <%= render "cards/time_entries/new", card: @card %>
+</div>

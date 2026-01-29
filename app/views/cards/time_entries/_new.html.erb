@@ -1,0 +1,15 @@
+<%= form_with model: [card, TimeEntry.new], class: "time-entry-form", data: { controller: "time-entry-form" } do |f| %>
+  <div class="time-entry-form__row">
+    <div class="time-entry-form__duration">
+      <input type="number" name="hours" id="hours" min="0" max="999" value="" placeholder="0" class="input" data-time-entry-form-target="hours">
+      <label for="hours">h</label>
+
+      <input type="number" name="minutes" id="minutes" min="0" max="59" value="" placeholder="0" class="input" data-time-entry-form-target="minutes">
+      <label for="minutes">m</label>
+    </div>
+
+    <%= f.hidden_field :duration_seconds, data: { "time-entry-form-target": "durationSeconds" } %>
+
+    <%= f.submit "Log time", class: "btn btn--link", data: { action: "click->time-entry-form#calculateDuration" } %>
+  </div>
+<% end %>

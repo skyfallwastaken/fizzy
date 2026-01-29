@@ -1,0 +1,20 @@
+<% active_timer = card.active_timer_for(Current.user) %>
+<div id="<%= dom_id(card, :timer) %>" class="card__timer"
+     data-controller="timer"
+     data-timer-running-value="<%= active_timer.present? %>"
+     data-timer-started-at-value="<%= active_timer&.started_at&.to_i || 0 %>"
+     data-timer-base-duration-value="<%= active_timer&.duration_seconds || 0 %>">
+  <% if active_timer %>
+    <%= button_to card_timer_path(card), method: :delete, class: "btn btn--negative btn--circle-mobile",
+          data: { controller: "tooltip", bridge__overflow_menu_target: "item", bridge_title: "Stop timer" } do %>
+      <%= icon_tag "timer-stop" %>
+      <span data-timer-target="display"><%= format_duration(active_timer.duration) %></span>
+    <% end %>
+  <% else %>
+    <%= button_to card_timer_path(card), class: "btn btn--circle-mobile",
+          data: { controller: "tooltip", bridge__overflow_menu_target: "item", bridge_title: "Start timer" } do %>
+      <%= icon_tag "timer-start" %>
+      <span class="for-screen-reader">Start timer</span>
+    <% end %>
+  <% end %>
+</div>

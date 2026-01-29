@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.2].define(version: 2026_01_21_155752) do
+ActiveRecord::Schema[8.2].define(version: 2026_01_29_215335) do
   create_table "accesses", id: :uuid, force: :cascade do |t|
     t.datetime "accessed_at"
     t.uuid "account_id", null: false
@@ -515,6 +515,19 @@ ActiveRecord::Schema[8.2].define(version: 2026_01_21_155752) do
     t.string "title", limit: 255
     t.datetime "updated_at", null: false
     t.index ["account_id", "title"], name: "index_tags_on_account_id_and_title", unique: true
+  end
+
+  create_table "time_entries", id: :uuid, force: :cascade do |t|
+    t.uuid "account_id", null: false
+    t.uuid "card_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "duration_seconds", default: 0, null: false
+    t.datetime "started_at"
+    t.datetime "updated_at", null: false
+    t.uuid "user_id", null: false
+    t.index ["account_id"], name: "index_time_entries_on_account_id"
+    t.index ["card_id", "user_id"], name: "index_time_entries_on_card_id_and_user_id"
+    t.index ["user_id", "started_at"], name: "index_time_entries_on_user_id_and_started_at"
   end
 
   create_table "user_settings", id: :uuid, force: :cascade do |t|

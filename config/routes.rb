@@ -85,6 +85,7 @@ Rails.application.routes.draw do
       resource :triage
       resource :watch
       resource :reading
+      resource :timer
 
       resources :reactions
 
@@ -92,6 +93,7 @@ Rails.application.routes.draw do
       resource :self_assignment, only: :create
       resources :steps
       resources :taggings
+      resources :time_entries
 
       resources :comments do
         resources :reactions, module: :comments

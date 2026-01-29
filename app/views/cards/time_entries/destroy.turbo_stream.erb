@@ -1,0 +1,6 @@
+<%= turbo_stream.remove @time_entry %>
+<%= turbo_stream.replace dom_id(@card, :time_entries_total) do %>
+  <span class="time-entries__total" id="<%= dom_id(@card, :time_entries_total) %>">
+    Total: <strong><%= format_duration(@card.reload.total_time_tracked) %></strong>
+  </span>
+<% end %>

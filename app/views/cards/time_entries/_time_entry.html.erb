@@ -1,0 +1,26 @@
+<div id="<%= dom_id(time_entry) %>" class="time-entry">
+  <figure class="time-entry__avatar">
+    <%= avatar_tag time_entry.user %>
+  </figure>
+
+  <div class="time-entry__content">
+    <div class="time-entry__header">
+      <strong class="time-entry__user"><%= time_entry.user.familiar_name %></strong>
+      <span class="time-entry__duration">
+        <%= format_duration(time_entry.duration) %>
+        <% if time_entry.running? %>
+          <span class="time-entry__badge">running</span>
+        <% end %>
+      </span>
+      <span class="time-entry__date"><%= local_datetime_tag(time_entry.created_at, style: :daysago) %></span>
+    </div>
+  </div>
+
+  <% if time_entry.user == Current.user && !time_entry.running? %>
+    <%= button_to card_time_entry_path(@card, time_entry), method: :delete, class: "time-entry__delete btn btn--plain",
+          data: { controller: "tooltip", bridge_title: "Delete" } do %>
+      <%= icon_tag "trash" %>
+      <span class="for-screen-reader">Delete</span>
+    <% end %>
+  <% end %>
+</div>

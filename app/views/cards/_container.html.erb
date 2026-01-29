@@ -3,6 +3,7 @@
     <div class="card-perma__actions card-perma__actions--left">
       <%= render "cards/container/gild", card: card if card.published? && !card.closed? %>
       <%= render "cards/container/image", card: card %>
+      <%= render "cards/timers/timer", card: card if card.published? && !card.closed? %>
     </div>
 
     <div class="card-perma__bg">

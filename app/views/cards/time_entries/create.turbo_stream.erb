@@ -1,0 +1,6 @@
+<%= turbo_stream.prepend dom_id(@card, :time_entries_list), partial: "cards/time_entries/time_entry", locals: { time_entry: @time_entry } %>
+<%= turbo_stream.replace dom_id(@card, :time_entries_total) do %>
+  <span class="time-entries__total" id="<%= dom_id(@card, :time_entries_total) %>">
+    Total: <strong><%= format_duration(@card.total_time_tracked) %></strong>
+  </span>
+<% end %>
