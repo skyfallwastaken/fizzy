@@ -35,6 +35,7 @@ gem "aws-sdk-s3", require: false
 gem "web-push"
 gem "net-http-persistent"
 gem "rubyzip", require: "zip"
+gem "chronic_duration"
 gem "mittens"
 gem "useragent", bc: "useragent"
 
