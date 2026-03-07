@@ -86,18 +86,21 @@ class ShopItem < ApplicationRecord
   before_validation :fix_blacklist
 
   after_commit :refresh_carousel_cache, if: :carousel_relevant_change?
-  after_commit :invalidate_buyable_standalone_cache
+  after_commit :invalidate_shop_page_cache
 
-  BUYABLE_STANDALONE_CACHE_KEY = "shop_items/buyable_standalone"
+  SHOP_PAGE_CACHE_KEY = "shop_items/shop_page"
 
-  def self.cached_buyable_standalone
-    Rails.cache.fetch(BUYABLE_STANDALONE_CACHE_KEY, expires_in: 5.minutes) do
-      enabled.listed.buyable_standalone.includes(:image_attachment, image_attachment: [ :blob, :record ]).to_a
+  def self.cached_shop_page_data
+    Rails.cache.fetch(SHOP_PAGE_CACHE_KEY, expires_in: 5.minutes) do
+      buyable = enabled.listed.buyable_standalone.includes(image_attachment: :blob).to_a
+      recently_added = buyable.select { |item| item.created_at >= 2.weeks.ago }.sort_by(&:created_at).reverse
+
+      { buyable_standalone: buyable, recently_added: recently_added }
     end
   end
 
-  def self.invalidate_buyable_standalone_cache!
-    Rails.cache.delete(BUYABLE_STANDALONE_CACHE_KEY)
+  def self.invalidate_shop_page_cache!
+    Rails.cache.delete(SHOP_PAGE_CACHE_KEY)
   end
 
   MANUAL_FULFILLMENT_TYPES = [
@@ -271,8 +274,8 @@ class ShopItem < ApplicationRecord
     Cache::CarouselPrizesJob.perform_later(force: true)
   end
 
-  def invalidate_buyable_standalone_cache
-    self.class.invalidate_buyable_standalone_cache!
+  def invalidate_shop_page_cache
+    self.class.invalidate_shop_page_cache!
   end
 
   def fix_blacklist
